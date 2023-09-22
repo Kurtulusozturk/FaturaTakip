@@ -6,6 +6,10 @@ namespace FaturaTakipAPI.Controllers
 {
     [Route("api/musteri")]
     [ApiController]
+    //ControllerBase kütüphanesi, ASP.NET Core web uygulamalarının denetleyicilerinin temel sınıfını ifade eder ve bu sınıf,
+    //MVC (Model-View-Controller) veya Web API uygulamalarında kullanılır.
+    //ControllerBase sınıfı, bir denetleyici (controller) sınıfının türetilmesi için temel sağlar
+    //ve çeşitli özellikler ve metotlar içerir.
     public class MusteriController : ControllerBase
     {
         private readonly IMusteriService _musteriService;
@@ -15,14 +19,14 @@ namespace FaturaTakipAPI.Controllers
             _musteriService = musteriService;
         }
 
-        [HttpGet]
+        [HttpGet("getall")]
         public IActionResult GetAllMusteriler()
         {
             var musteriler = _musteriService.GetAllMusteriler();
             return Ok(musteriler);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("getbyid/{id}")]
         public IActionResult GetMusteriById(int id)
         {
             var musteri = _musteriService.GetMusteriById(id);
@@ -33,14 +37,14 @@ namespace FaturaTakipAPI.Controllers
             return Ok(musteri);
         }
 
-        [HttpPost]
+        [HttpPost("create")]
         public IActionResult CreateMusteri([FromBody] Musteriler musteri)
         {
             _musteriService.CreateMusteri(musteri);
             return CreatedAtAction(nameof(GetMusteriById), new { id = musteri.MusteriID }, musteri);
         }
 
-        [HttpPut("{id}")]
+        [HttpPut("update/{id}")]
         public IActionResult UpdateMusteri(int id, [FromBody] Musteriler musteri)
         {
             if (id != musteri.MusteriID)
@@ -51,7 +55,7 @@ namespace FaturaTakipAPI.Controllers
             return NoContent();
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("delete/{id}")]
         public IActionResult DeleteMusteri(int id)
         {
             _musteriService.DeleteMusteri(id);

@@ -11,6 +11,8 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IMusteriService, MusteriService>();
+builder.Services.AddScoped<IFaturaService, FaturaService>();
+builder.Services.AddScoped<ISirketService, SirketService>();
 
 //Db connection settings
 builder.Services.AddDbContext<FaturaTakipDbContext>(options =>
