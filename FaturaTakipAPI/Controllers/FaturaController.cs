@@ -35,15 +35,13 @@ namespace FaturaTakipAPI.Controllers
         [HttpPost("create")]
         public IActionResult CreateFatura([FromBody] FaturalarCreatAndUpdateModel fatura)
         {
-            _faturaService.CreateFatura(fatura);
-            return Ok("Fatura oluşturuldu");
+            return Ok(_faturaService.CreateFatura(fatura));
         }
 
         [HttpPut("update/{id}")]
         public IActionResult UpdateFatura(int id, [FromBody] FaturalarCreatAndUpdateModel fatura)
         {
-            _faturaService.UpdateFatura(id,fatura);
-            return Ok("Fatura güncellendi");
+            return Ok(_faturaService.UpdateFatura(id, fatura));
         }
 
         [HttpDelete("delete/{id}")]
