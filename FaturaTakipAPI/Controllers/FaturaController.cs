@@ -14,10 +14,10 @@ namespace FaturaTakipAPI.Controllers
         {
             _faturaService = faturaService;
         }
-        [HttpGet("getall")]
-        public IActionResult GetAllFaturalar()
+        [HttpGet("getbysirketbyid/{id}")]
+        public IActionResult GetFaturalarBySirketID(int id)
         {
-            var faturalar = _faturaService.GetAllFaturalar();
+            var faturalar = _faturaService.GetFaturalarBySirketID(id);
             return Ok(faturalar);
         }
 

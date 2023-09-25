@@ -1,4 +1,5 @@
 ﻿using FaturaTakip.Models;
+using FaturaTakipAPI.Models.Request;
 using FaturaTakipAPI.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,10 +20,10 @@ namespace FaturaTakipAPI.Controllers
             _musteriService = musteriService;
         }
 
-        [HttpGet("getall")]
-        public IActionResult GetAllMusteriler()
+        [HttpGet("getbysirketid/{id}")]
+        public IActionResult GetMusteriBySirketId(int id)
         {
-            var musteriler = _musteriService.GetAllMusteriler();
+            var musteriler = _musteriService.GetMusterilerBySirketId(id);
             return Ok(musteriler);
         }
 
@@ -38,21 +39,16 @@ namespace FaturaTakipAPI.Controllers
         }
 
         [HttpPost("create")]
-        public IActionResult CreateMusteri([FromBody] Musteriler musteri)
+        public IActionResult CreateMusteri([FromBody] MusterilerCreateAndUpdateModel musteri)
         {
             _musteriService.CreateMusteri(musteri);
             return CreatedAtAction(nameof(GetMusteriById), new { id = musteri.MusteriID }, musteri);
         }
 
         [HttpPut("update/{id}")]
-        public IActionResult UpdateMusteri(int id, [FromBody] Musteriler musteri)
+        public IActionResult UpdateMusteri(int id, [FromBody] MusterilerCreateAndUpdateModel musteri)
         {
-            if (id != musteri.MusteriID)
-            {
-                return BadRequest();
-            }
-            _musteriService.UpdateMusteri(musteri);
-            return NoContent();
+            return Ok(_musteriService.UpdateMusteri(id, musteri));
         }
 
         [HttpDelete("delete/{id}")]

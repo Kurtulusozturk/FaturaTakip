@@ -1,4 +1,5 @@
 ﻿using FaturaTakip.Models;
+using FaturaTakipAPI.Models.Request;
 using FaturaTakipAPI.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -24,9 +25,9 @@ namespace FaturaTakipAPI.Controllers
             return Ok(sirket);
         }
         [HttpGet("getbyemail/{email}")]
-        public IActionResult GetSirketByEmail(string email)
+        public IActionResult GetSirketByEmail(string email, string sifre)
         {
-            var sirket = _sirketService.GetSirketByEmail(email);
+            var sirket = _sirketService.GetSirketByEmail(email , sifre);
             if (sirket == null)
             {
                 return NotFound();
@@ -35,15 +36,15 @@ namespace FaturaTakipAPI.Controllers
         }
 
         [HttpPost("create")]
-        public IActionResult CreateSirket([FromBody] Sirketler sirket)
+        public IActionResult CreateSirket([FromBody] SirketlerCreateAndUpdateModel sirket)
         {
-            return NoContent();
+            return Ok(_sirketService.CreateSirket(sirket));
         }
 
         [HttpPut("update/{id}")]
-        public IActionResult UpdateSirket(int id, [FromBody] Sirketler sirket)
+        public IActionResult UpdateSirket(int id, [FromBody] SirketlerCreateAndUpdateModel sirket)
         {
-            return NoContent();
+            return Ok(_sirketService.UpdateSirket(id, sirket));
         }
     }
 }

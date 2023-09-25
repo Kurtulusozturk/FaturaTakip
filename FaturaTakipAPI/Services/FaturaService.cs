@@ -8,7 +8,7 @@ namespace FaturaTakipAPI.Services
 {
     public interface IFaturaService
     {
-        IEnumerable<FaturalarGetModel> GetAllFaturalar();
+        IEnumerable<FaturalarGetModel> GetFaturalarBySirketID(int id);
         FaturalarGetModel GetFaturaById(int id);
         string CreateFatura(FaturalarCreatAndUpdateModel fatura);
         string UpdateFatura(int id, FaturalarCreatAndUpdateModel fatura);
@@ -64,29 +64,33 @@ namespace FaturaTakipAPI.Services
             }
         }
 
-        public IEnumerable<FaturalarGetModel> GetAllFaturalar()
-        {
+        public IEnumerable<FaturalarGetModel> GetFaturalarBySirketID(int id)
+        {            
+            
             var faturalarList = new List<FaturalarGetModel>();
-            foreach (var item in _dbContext.Faturalar.ToList())
+            foreach (var item in _dbContext.Faturalar.Include(s => s.Sirket).Include(m => m.Musteri).ToList())
             {
-                var fatura = _dbContext.Faturalar.Include(f => f.Musteri).Include(f => f.Sirket).FirstOrDefault(m => m.FaturaID == item.FaturaID);
-                var showFatura = new FaturalarGetModel
+                if(item.Sirket.SirketID == id)
                 {
-                    FaturaNo = fatura.FaturaNo,
-                    FaturaTarihi = fatura.FaturaTarihi,
-                    SiparisNo = fatura.SiparisNo,
-                    SiparisTarihi = fatura.SiparisTarihi,
-                    Urun = fatura.Urun,
-                    Miktar = fatura.Miktar,
-                    BirimFiyat = fatura.BirimFiyat,
-                    KDV = fatura.KDV,
-                    KDVOrani = fatura.KDVOrani,
-                    OdenecekTutar = fatura.OdenecekTutar,
-                    SirketID = fatura.Sirket.SirketID,
-                    MusteriID = fatura.Musteri.MusteriID,
-                    Durum = fatura.Durum,
-                };
-                faturalarList.Add(showFatura);
+                    var showFatura = new FaturalarGetModel
+                    {
+                        FaturaNo = item.FaturaNo,
+                        FaturaTarihi = item.FaturaTarihi,
+                        SiparisNo = item.SiparisNo,
+                        SiparisTarihi = item.SiparisTarihi,
+                        Urun = item.Urun,
+                        Miktar = item.Miktar,
+                        BirimFiyat = item.BirimFiyat,
+                        KDV = item.KDV,
+                        KDVOrani = item.KDVOrani,
+                        OdenecekTutar = item.OdenecekTutar,
+                        SirketID = item.Sirket.SirketID,
+                        MusteriID = item.Musteri.MusteriID,
+                        MusteriFullAd = item.Musteri.Ad +" " +item.Musteri.Soyad,
+                        Durum = item.Durum,
+                    };
+                    faturalarList.Add(showFatura);
+                }
             }
             return faturalarList;
         }
@@ -110,6 +114,7 @@ namespace FaturaTakipAPI.Services
                     OdenecekTutar = fatura.OdenecekTutar,
                     SirketID = fatura.Sirket.SirketID,
                     MusteriID = fatura.Musteri.MusteriID,
+                    MusteriFullAd = fatura.Musteri.Ad + " " + fatura.Musteri.Soyad,
                     Durum = fatura.Durum,
                 };
                 return showFatura;

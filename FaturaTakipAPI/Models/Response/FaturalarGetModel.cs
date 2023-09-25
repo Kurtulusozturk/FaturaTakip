@@ -14,6 +14,7 @@
         public decimal? OdenecekTutar { get; set; }
         public int? SirketID { get; set; }
         public int? MusteriID { get; set; }
+        public string? MusteriFullAd { get; set; }
         public bool? Durum { get; set; }
     }
 }
