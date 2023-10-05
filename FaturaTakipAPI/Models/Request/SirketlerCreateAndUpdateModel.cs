@@ -2,7 +2,7 @@
 {
     public class SirketlerCreateAndUpdateModel
     {
-        public string? SirketAdı { get; set; }
+        public string? SirketAdi { get; set; }
         public string? Adres { get; set; }
         public string? TelefonNo { get; set; }
         public string? WebAdresi { get; set; }

@@ -2,6 +2,7 @@
 using FaturaTakipAPI.Models.Request;
 using FaturaTakipAPI.Services;
 using Microsoft.AspNetCore.Mvc;
+using System.Drawing;
 
 namespace FaturaTakipAPI.Controllers
 {
@@ -34,7 +35,16 @@ namespace FaturaTakipAPI.Controllers
             }
             return Ok(sirket);
         }
-
+		[HttpGet("getpassword/{email}")]
+		public IActionResult GetPassword(string email)
+        {
+			var password = _sirketService.GetPassword(email);
+			if (password == null)
+			{
+				return NotFound();
+			}
+			return Ok(password);
+		}
         [HttpPost("create")]
         public IActionResult CreateSirket([FromBody] SirketlerCreateAndUpdateModel sirket)
         {

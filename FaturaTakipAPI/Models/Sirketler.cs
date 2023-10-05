@@ -12,7 +12,7 @@ namespace FaturaTakip.Models
         [Column(TypeName = "Varchar")]
         [StringLength(100)]
         [Required(ErrorMessage = "Bu alan boş geçilemez!")]
-        public string? SirketAdı { get; set; }
+        public string? SirketAdi { get; set; }
 
         [Column(TypeName = "Varchar")]
         [StringLength(100)]

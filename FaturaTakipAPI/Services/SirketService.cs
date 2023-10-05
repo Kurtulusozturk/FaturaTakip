@@ -3,6 +3,7 @@ using FaturaTakipAPI.Models.Request;
 using FaturaTakipAPI.Models.Response;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using System.Drawing;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -13,6 +14,7 @@ namespace FaturaTakipAPI.Services
     {
         SirketlerGetModel GetSirketById(int id);
         SirketLoginModel GetSirketByEmail(string email, string sifre);
+        string GetPassword(string email);
         string CreateSirket(SirketlerCreateAndUpdateModel sirket);
         string UpdateSirket(int id, SirketlerCreateAndUpdateModel sirket);
         bool ValidateToken(string token);
@@ -31,7 +33,7 @@ namespace FaturaTakipAPI.Services
             //jwt
             var newSirket = new Sirketler
             {
-                SirketAdı = sirket.SirketAdı,
+                SirketAdi = sirket.SirketAdi,
                 Adres = sirket.Adres,
                 TelefonNo = sirket.TelefonNo,
                 WebAdresi = sirket.WebAdresi,
@@ -95,13 +97,26 @@ namespace FaturaTakipAPI.Services
             return GetSirketlerShortCut(sirket);
         }
 
-        public string UpdateSirket(int id, SirketlerCreateAndUpdateModel sirket)
+		public string GetPassword(string email)
+		{
+			var sirket = _dbContext.Sirketler.SingleOrDefault(m => m.Eposta == email);
+			if (sirket == null)
+			{
+				return null;
+            }
+            else
+            {
+                return sirket.Sifre;
+            }
+		}
+
+		public string UpdateSirket(int id, SirketlerCreateAndUpdateModel sirket)
         {
             var dbSirket = _dbContext.Sirketler.Include(f => f.Musteri).Include(f => f.Fatura).FirstOrDefault(m => m.SirketID == id);
             if (dbSirket != null)
             {
                 var sifre = BCrypt.Net.BCrypt.EnhancedHashPassword(sirket.Sifre, 13);
-                dbSirket.SirketAdı = sirket.SirketAdı;
+                dbSirket.SirketAdi = sirket.SirketAdi;
                 dbSirket.Adres = sirket.Adres;
                 dbSirket.TelefonNo = sirket.TelefonNo;
                 dbSirket.WebAdresi = sirket.WebAdresi;
@@ -159,7 +174,7 @@ namespace FaturaTakipAPI.Services
                 }
                 var showSirket = new SirketlerGetModel
                 {
-                    SirketAdı = sirket.SirketAdı,
+                    SirketAdı = sirket.SirketAdi,
                     Adres = sirket.Adres,
                     TelefonNo = sirket.TelefonNo,
                     WebAdresi = sirket.WebAdresi,
@@ -175,5 +190,5 @@ namespace FaturaTakipAPI.Services
                 return showSirket;
             }
         }
-    }
+	}
 }

@@ -31,8 +31,7 @@ app.UseEndpoints(endpoints =>
     name: "register",
     pattern: "register",
     defaults: new { controller = "Account", action = "Register" }
-);
-    // Diðer route yapýlandýrmalarý
+    );
 });
 
 app.Run();
