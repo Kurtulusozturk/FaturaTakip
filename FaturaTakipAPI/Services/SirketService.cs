@@ -3,9 +3,7 @@ using FaturaTakipAPI.Models.Request;
 using FaturaTakipAPI.Models.Response;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using System.Drawing;
 using System.IdentityModel.Tokens.Jwt;
-using System.Net.Sockets;
 using System.Security.Claims;
 using System.Text;
 
@@ -17,9 +15,11 @@ namespace FaturaTakipAPI.Services
         SirketLoginModel GetSirketByEmail(string email, string sifre);
         string CreateSirket(SirketlerCreateAndUpdateModel sirket);
         string UpdateSirket(int id, SirketlerCreateAndUpdateModel sirket);
+        bool ValidateToken(string token);
     }
     public class SirketService : ISirketService
     {
+        string signingKey = "ThisIsPrivateKeyWhichIsSolveJwt";
         // Burada DbContext veya başka bir veritabanı erişimi için gerekli kodlar olur.
         private readonly FaturaTakipDbContext _dbContext;
         public SirketService(FaturaTakipDbContext dbContext)
@@ -28,7 +28,6 @@ namespace FaturaTakipAPI.Services
         }
         public string CreateSirket(SirketlerCreateAndUpdateModel sirket)
         {
-            //bcrypt
             //jwt
             var newSirket = new Sirketler
             {
@@ -64,8 +63,7 @@ namespace FaturaTakipAPI.Services
                 {
                     new Claim(ClaimTypes.Email, email)
                 };
-                var signinKey = "ThisIsPrivateKey";
-                var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(signinKey));
+                var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(signingKey));
                 var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
                 var jwtSecurityToken = new JwtSecurityToken(
                     // tokeni sağlayan kişi issuer:"asdasdas.com"
@@ -83,11 +81,9 @@ namespace FaturaTakipAPI.Services
 
                 var showSirket = new SirketLoginModel
                 {
-                    status = "Ok",
                     email = sirket.Eposta,
-                    sifre = sirket.Sifre,
-                    lastLogin = DateTime.Now,
                     token = token,
+                    id = sirket.SirketID
                 };
                 return showSirket;
             }
@@ -104,6 +100,7 @@ namespace FaturaTakipAPI.Services
             var dbSirket = _dbContext.Sirketler.Include(f => f.Musteri).Include(f => f.Fatura).FirstOrDefault(m => m.SirketID == id);
             if (dbSirket != null)
             {
+                var sifre = BCrypt.Net.BCrypt.EnhancedHashPassword(sirket.Sifre, 13);
                 dbSirket.SirketAdı = sirket.SirketAdı;
                 dbSirket.Adres = sirket.Adres;
                 dbSirket.TelefonNo = sirket.TelefonNo;
@@ -111,13 +108,36 @@ namespace FaturaTakipAPI.Services
                 dbSirket.Eposta = sirket.Eposta;
                 dbSirket.VergiDairesi = sirket.VergiDairesi;
                 dbSirket.VergiKimlikNo = sirket.VergiKimlikNo;
-                dbSirket.Sifre = sirket.Sifre;
+                dbSirket.Sifre = sifre;
                 dbSirket.Durum = sirket.Durum;
                 _dbContext.SaveChanges();
                 return ("Sirket güncellendi");
             }
             return ("Sirket Bulunamadı");
 
+        }
+        public bool ValidateToken(string token)
+        {
+            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(signingKey));
+            try
+            {
+                JwtSecurityTokenHandler handler = new ();
+                handler.ValidateToken(token, new TokenValidationParameters()
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = securityKey,
+                    ValidateLifetime = true,
+                    ValidateAudience = false,
+                    ValidateIssuer = false,
+
+                },out SecurityToken validatedToken);
+                var jwtToken = (JwtSecurityToken)validatedToken;
+                var claims = jwtToken.Claims.ToList();
+                return true;
+            }catch (System.Exception)
+            {
+                return false;
+            }
         }
         public SirketlerGetModel GetSirketlerShortCut(Sirketler sirket)
         {

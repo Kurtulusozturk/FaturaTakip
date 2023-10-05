@@ -25,7 +25,7 @@ namespace FaturaTakipAPI.Services
 
         public string CreateMusteri(MusterilerCreateAndUpdateModel musteri)
         {
-            var sirket = _dbContext.Sirketler.FirstOrDefault(s => s.SirketID == musteri.SirketID);
+            var sirket = _dbContext.Sirketler?.FirstOrDefault(s => s.SirketID == musteri.SirketID);
 
             if (sirket != null)
             {
@@ -41,7 +41,7 @@ namespace FaturaTakipAPI.Services
                     Durum = musteri.Durum,
                 };
 
-                _dbContext.Musteriler.Add(newMusteri);
+                _dbContext.Musteriler?.Add(newMusteri);
                 _dbContext.SaveChanges();
                 return ("Yeni kayıt oluşturuldu");
             }
@@ -92,7 +92,7 @@ namespace FaturaTakipAPI.Services
             var musterilerList = new List<MusterilerGetModel>();
             foreach (var item in _dbContext.Musteriler.Include(f => f.Fatura).Include(f => f.Sirket).ToList())
             {
-                if (item.Sirket.SirketID == id)
+                if (item.Sirket?.SirketID == id)
                 {
                     var musteriIdAndSiparisNoList = new List<MusteriIdSiparisNoModel>();
                     foreach (var i in item.Fatura.ToList())

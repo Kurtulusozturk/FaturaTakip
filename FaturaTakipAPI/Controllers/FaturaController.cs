@@ -1,12 +1,14 @@
 ﻿using FaturaTakip.Models;
 using FaturaTakipAPI.Models.Request;
 using FaturaTakipAPI.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FaturaTakipAPI.Controllers
 {
     [Route("api/fatura")]
     [ApiController]
+    [Authorize]
     public class FaturaController : ControllerBase
     {
         private readonly IFaturaService _faturaService;

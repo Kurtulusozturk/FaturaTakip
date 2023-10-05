@@ -2,6 +2,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddHttpContextAccessor();
 
 var app = builder.Build();
 
@@ -19,5 +20,19 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllerRoute(
+        name: "login",
+        pattern: "login",
+        defaults: new { controller = "Account", action = "Login" }
+    );
+    endpoints.MapControllerRoute(
+    name: "register",
+    pattern: "register",
+    defaults: new { controller = "Account", action = "Register" }
+);
+    // Diðer route yapýlandýrmalarý
+});
 
 app.Run();

@@ -1,12 +1,14 @@
 ﻿using FaturaTakip.Models;
 using FaturaTakipAPI.Models.Request;
 using FaturaTakipAPI.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FaturaTakipAPI.Controllers
 {
     [Route("api/musteri")]
     [ApiController]
+    [Authorize]
     //ControllerBase kütüphanesi, ASP.NET Core web uygulamalarının denetleyicilerinin temel sınıfını ifade eder ve bu sınıf,
     //MVC (Model-View-Controller) veya Web API uygulamalarında kullanılır.
     //ControllerBase sınıfı, bir denetleyici (controller) sınıfının türetilmesi için temel sağlar

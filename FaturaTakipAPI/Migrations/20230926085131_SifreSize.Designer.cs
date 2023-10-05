@@ -4,6 +4,7 @@ using FaturaTakip.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FaturaTakipAPI.Migrations
 {
     [DbContext(typeof(FaturaTakipDbContext))]
-    partial class FaturaTakipDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230926085131_SifreSize")]
+    partial class SifreSize
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

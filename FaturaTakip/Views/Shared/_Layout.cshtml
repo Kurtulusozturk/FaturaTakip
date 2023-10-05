@@ -1,49 +1,88 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - FaturaTakip</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/FaturaTakip.styles.css" asp-append-version="true" />
-</head>
-<body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">FaturaTakip</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+	<title>@ViewData["Title"] - FaturaTakip</title>
+	<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+	<link rel="stylesheet" href="~/FaturaTakip.styles.css" asp-append-version="true" />
+	<style>
+		#tableRows { /* id kullanımı 1.yöntem  */
+			background-color: #79cdcd;
+			color: white;
+		}
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2023 - FaturaTakip - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-    </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    @await RenderSectionAsync("Scripts", required: false)
+		#tableCols {
+			background-color: #528b8b;
+			color: white;
+		}
+
+		.nav-item a.nav-link {
+			color: white; /* Varsayılan renk */
+		}
+
+			/* Hover efekti ile renk değişikliği */
+			.nav-item a.nav-link:hover {
+				color: #528b8b; /* Üzerine gelindiğinde renk değişikliği */
+			}
+	</style>
+</head>
+<body style="display: flex; flex-direction: column; min-height: 100vh; overflow-x: hidden; overflow-y: auto; background-color: #d1eeee; margin-bottom: 0px;">
+	<header>
+		<nav class="navbar navbar-expand-lg p-4" style="background-color: #00c5cd;">
+			<a class="navbar-brand" href="#" style="color: white; font-size:x-large;  font-weight: bolder;">Fatura Takip Sistemi</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+
+			<div class="tabs collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+				<ul class="navbar-nav mr-auto">
+					<li class="nav-item active nav-item-light">
+						<a class="nav-link" href="/invoices">Faturalarım</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="/customers">Müşterilerim</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="/account/editprofile">Şirket Bilgilerim</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#">Çıkış Yap (Şirket Adı)</a>
+					</li>
+				</ul>
+			</div>
+		</nav>
+	</header>
+	<div class="container">
+		<main role="main" class="pb-3">
+			@RenderBody()
+		</main>
+	</div>
+
+	<footer class="d-flex flex-wrap justify-content-between align-items-center py-3 border-top mt-auto " style="background-color: #00c5cd;">
+		<p class="col-md-4 mb-0" style="color: white;">© 2023 faturatakipsistemi.com</p>
+
+		<a href="/" class="col-md-4 d-flex align-items-center justify-content-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
+			<svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
+		</a>
+
+		<ul class="nav col-md-4 justify-content-end">
+			<li class="nav-item"><a href="#" class="nav-link px-2" style="color: white;">Home</a></li>
+			<li class="nav-item"><a href="#" class="nav-link px-2" style="color: white;">Features</a></li>
+			<li class="nav-item"><a href="#" class="nav-link px-2" style="color: white;">Pricing</a></li>
+			<li class="nav-item"><a href="#" class="nav-link px-2" style="color: white;">FAQs</a></li>
+			<li class="nav-item"><a href="#" class="nav-link px-2" style="color: white;">About</a></li>
+		</ul>
+	</footer>
+	<script src="~/lib/jquery/dist/jquery.min.js"></script>
+	<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="~/js/site.js" asp-append-version="true"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+	@await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

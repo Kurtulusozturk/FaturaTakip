@@ -1,0 +1,73 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+	<style>
+		.tabs {
+			visibility: hidden;
+		}
+	</style>
+	@if (!string.IsNullOrEmpty(ViewBag.ErrorMessage))
+	{
+		<div class="alert alert-danger">@ViewBag.ErrorMessage</div>
+	}
+
+	<div class="row mt-4 mb-4" style=" flex: 1">
+		<h1 class="d-flex justify-content-center" style="font-size: 50px; font-weight: bolder; color: #00c5cd;">Kayıt Ol</h1>
+		<div class="col-2 col-sm-4">
+		</div>
+		<div class="col">
+			<form method="post" action="Account/Register">
+				@Html.AntiForgeryToken()
+				<div class="row">
+					<div class="col-6 pe-1">
+						<div class="form-outline mb-1">
+							<input type="text" id="SirketAdı" class="form-control" placeholder="Şirket İsmi (*)" />
+						</div>
+
+						<div class="form-outline mb-1">
+							<input type="number" id="TelefonNo" class="form-control" placeholder="Telefon No (*)" />
+						</div>
+
+						<div class="form-outline mb-1">
+							<input type="email" id="Eposta" class="form-control" placeholder="E posta (*)" />
+						</div>
+
+						<div class="form-outline mb-1">
+							<input type="password" id="Sifre" class="form-control" placeholder="Şifre (*)" />
+						</div>
+
+						<div class="form-outline mb-1">
+							<input type="password" id="SifreDogrulama" class="form-control" placeholder="Şifre Doğrulama (*)" />
+						</div>
+					</div>
+					<div class="col-6 ps-1">
+						<div class="form-outline mb-1">
+							<input type="text" id="Adres" class="form-control" placeholder="Adres" />
+						</div>
+
+						<div class="form-outline mb-1">
+							<input type="text" id="WebAdresi" class="form-control" placeholder="Web Adresi" />
+						</div>
+
+						<div class="form-outline mb-1">
+							<input type="text" id="VergiDairesi" class="form-control" placeholder="Vergi Dairesi" />
+						</div>
+
+						<div class="form-outline mb-1">
+							<input type="email" id="VergiKimlikNo" class="form-control" placeholder="Vergi Kimlik No" />
+						</div>
+					</div>
+				</div>
+				<!-- Submit button -->
+				<div class="row d-flex justify-content-center m-1 ">
+					<button type="submit" class="btn btn-block mb-4" style="width: 25%; background-color: #00c5cd; color: white;">Kayıt Ol</button>
+				</div>
+			</form>
+		</div>
+		<div class="col-2 col-sm-4">
+		</div>
+	</div>
+
+
+}

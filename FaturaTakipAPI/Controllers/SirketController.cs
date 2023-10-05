@@ -46,5 +46,10 @@ namespace FaturaTakipAPI.Controllers
         {
             return Ok(_sirketService.UpdateSirket(id, sirket));
         }
+        [HttpGet("ValidateToken")]
+        public bool ValidateToken(string token)
+        {
+            return _sirketService.ValidateToken(token); 
+        }
     }
 }

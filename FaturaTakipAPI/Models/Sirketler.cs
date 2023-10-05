@@ -39,7 +39,7 @@ namespace FaturaTakip.Models
         public string? VergiKimlikNo { get; set; }
 
         [Column(TypeName = "Varchar")]
-        [StringLength(50)]
+        [StringLength(255)]
         [Required(ErrorMessage = "Bu alan boş geçilemez!")]
         public string? Sifre { get; set; }
 
