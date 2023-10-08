@@ -2,7 +2,8 @@
 {
     public class FaturalarGetModel
     {
-        public string? FaturaNo { get; set; }
+		public int FaturaID { get; set; }
+		public string? FaturaNo { get; set; }
         public DateTime FaturaTarihi { get; set; }
         public string? SiparisNo { get; set; }
         public DateTime SiparisTarihi { get; set; }

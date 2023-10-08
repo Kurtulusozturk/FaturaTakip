@@ -39,8 +39,18 @@ namespace FaturaTakipAPI.Controllers
             }
             return Ok(musteri);
         }
+        [HttpGet("getbyidfordropdown/{id}")]
+        public IActionResult GetMusterilerForDropdown(int id)
+        {
+            var musteri = _musteriService.GetMusterilerForDropdown(id);
+            if(musteri == null)
+            {
+                return NotFound();
+            }
+            return Ok(musteri);
+        }
 
-        [HttpPost("create")]
+		[HttpPost("create")]
         public IActionResult CreateMusteri([FromBody] MusterilerCreateAndUpdateModel musteri)
         {
             _musteriService.CreateMusteri(musteri);

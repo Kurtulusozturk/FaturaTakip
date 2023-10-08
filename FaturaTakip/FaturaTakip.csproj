@@ -19,8 +19,7 @@
 
   <ItemGroup>
     <Folder Include="Migrations\" />
-    <Folder Include="Models\Customer\" />
-    <Folder Include="Models\Invoice\" />
+    <Folder Include="Models\Customer\request\" />
   </ItemGroup>
 
 </Project>

@@ -25,7 +25,6 @@ namespace FaturaTakip.Controllers
             {
 				var client = new HttpClient();
                 client.BaseAddress = new Uri("http://localhost:5191");
-                var json = System.Text.Json.JsonSerializer.Serialize(request);
 				var dbPasswordResponse = client.GetAsync("/api/sirket/getpassword/" + request.Email).Result;
                 if (dbPasswordResponse.IsSuccessStatusCode)
                 {
@@ -37,11 +36,11 @@ namespace FaturaTakip.Controllers
 						{
 							var responseContent = response.Content.ReadAsStringAsync().Result;
 							var loginResponseModel = JsonConvert.DeserializeObject<LoginResponseModel>(responseContent);
-							// Verileri değişkenlere alın
 							HttpContext httpContext = _httpContextAccessor.HttpContext;
 							string activeUserEmail = loginResponseModel.email;
 							string activeUserToken = loginResponseModel.token;
 							int activeUserId = loginResponseModel.id;
+                            //cookie
 							var cookieOptions = new CookieOptions
 							{
 								Expires = DateTime.Now.AddHours(1),
@@ -76,7 +75,8 @@ namespace FaturaTakip.Controllers
         {
             if(request.Sifre == null || request.Eposta == null)
             {
-                return View();
+				ViewBag.ErrorMessage = "Lütfen (*) işaretli alanları doldurunuz.";
+				return View();
             }
             else
             {
@@ -96,7 +96,6 @@ namespace FaturaTakip.Controllers
                 }
                 else
                 {
-                    Console.WriteLine("Error: " + response.StatusCode);
                     ViewBag.ErrorMessage = "Kayıt olma başarısız. Lütfen tekrar deneyin.";
                     return View();
                 }

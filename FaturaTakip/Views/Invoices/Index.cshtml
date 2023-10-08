@@ -1,52 +1,60 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-    <div class="row mt-4" style=" flex: 1; margin-left: 0px;margin-right: 0px;">
-        <div class="col-0 col-sm-1">
-        </div>
-        <div class="col" style="padding-left: 0px; padding-right: 0px;">
-            <div class="table-responsive">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th scope="col" id="tableCols">Fatura ID</th>
-                            <th scope="col" id="tableCols">Fatura No</th>
-                            <th scope="col" id="tableCols">Fatura Tarihi</th>
-                            <th scope="col" id="tableCols">Sipariş No</th>
-                            <th scope="col" id="tableCols">Sipariş Tarihi</th>
-                            <th scope="col" id="tableCols">Ürün</th>
-                            <th scope="col" id="tableCols">Miktar</th>
-                            <th scope="col" id="tableCols">Birim Fiyat</th>
-                            <th scope="col" id="tableCols">KDV (₺)</th>
-                            <th scope="col" id="tableCols">KDV Oranı (%)</th>
-                            <th scope="col" id="tableCols">Ödenecek Tutar (₺)</th>
-                            <th scope="col" id="tableCols">Müşteri</th>
-                            <th scope="col" id="tableCols"></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <th scope="row" id="tableRows">1</th>
-                            <td id="tableRows">321321</td>
-                            <td id="tableRows">24.09.2023</td>
-                            <td id="tableRows">132165</td>
-                            <td id="tableRows">24.09.2023</td>
-                            <td id="tableRows">TV</td>
-                            <td id="tableRows">1</td>
-                            <td id="tableRows">100.00</td>
-                            <td id="tableRows">100.00</td>
-                            <td id="tableRows">10.00</td>
-                            <td id="tableRows">100.00</td>
-                            <td id="tableRows">Aslı Limoni</td>
-                            <td id="tableRows"><a class="btn " style="color: white; background-color: #528b8b;" href="/invoices/edit">Düzenle</a></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <a class="btn" style="color: white; background-color: #43cd80;" href="/invoices/add">Yeni Fatura Ekle</a>
-        </div>
-        <div class="col-0 col-sm-1">
-        </div>
-    </div>
-}
+﻿@using FaturaTakip.Models.Invoice.response
+@model List<InvoiceResponseModel>
+<div class="row mt-4" style=" flex: 1; margin-left: 0px;margin-right: 0px;">
+	<div class="col-0 col-sm-1">
+	</div>
+	<div class="col" style="padding-left: 0px; padding-right: 0px;">
+		<div class="table-responsive">
+			<table class="table">
+				<thead>
+					<tr>
+						<th scope="col" id="tableCols">Fatura ID</th>
+						<th scope="col" id="tableCols">Fatura No</th>
+						<th scope="col" id="tableCols">Fatura Tarihi</th>
+						<th scope="col" id="tableCols">Sipariş No</th>
+						<th scope="col" id="tableCols">Sipariş Tarihi</th>
+						<th scope="col" id="tableCols">Ürün</th>
+						<th scope="col" id="tableCols">Miktar</th>
+						<th scope="col" id="tableCols">Birim Fiyat</th>
+						<th scope="col" id="tableCols">KDV (₺)</th>
+						<th scope="col" id="tableCols">KDV Oranı (%)</th>
+						<th scope="col" id="tableCols">Ödenecek Tutar (₺)</th>
+						<th scope="col" id="tableCols">Müşteri</th>
+						<th scope="col" id="tableCols"></th>
+					</tr>
+				</thead>
+				<tbody>
+					@{
+						int i = 1;
+					}
+					@foreach (var invoice in Model)
+					{
+						if (invoice.Durum)
+						{
+							<tr>
+								<th scope="row" id="tableRows">@i</th>
+								<td id="tableRows">@invoice.FaturaNo</td>
+								<td id="tableRows">@invoice.FaturaTarihi</td>
+								<td id="tableRows">@invoice.SiparisNo</td>
+								<td id="tableRows">@invoice.SiparisTarihi</td>
+								<td id="tableRows">@invoice.Urun</td>
+								<td id="tableRows">@invoice.Miktar</td>
+								<td id="tableRows">@invoice.BirimFiyat ₺</td>
+								<td id="tableRows">@invoice.KDV ₺</td>
+								<td id="tableRows">%@invoice.KDVOrani</td>
+								<td id="tableRows">@invoice.OdenecekTutar ₺</td>
+								<td id="tableRows">@invoice.MusteriFullAd</td>
+								<td id="tableRows"><a class="btn " style="color: white; background-color: #528b8b;" href="/invoices/edit/?invoiceID=@invoice.FaturaID">Düzenle</a></td>
+							</tr>
+							i++;
+						}
+					}
+				</tbody>
+			</table>
+		</div>
+		<a class="btn" style="color: white; background-color: #43cd80;" href="/invoices/add">Yeni Fatura Ekle</a>
+	</div>
+	<div class="col-0 col-sm-1">
+	</div>
+</div>
+
