@@ -115,7 +115,7 @@ namespace FaturaTakipAPI.Services
             var dbSirket = _dbContext.Sirketler.Include(f => f.Musteri).Include(f => f.Fatura).FirstOrDefault(m => m.SirketID == id);
             if (dbSirket != null)
             {
-                var sifre = BCrypt.Net.BCrypt.EnhancedHashPassword(sirket.Sifre, 13);
+                dbSirket.Sifre = sirket.Sifre;
                 dbSirket.SirketAdi = sirket.SirketAdi;
                 dbSirket.Adres = sirket.Adres;
                 dbSirket.TelefonNo = sirket.TelefonNo;
@@ -123,7 +123,6 @@ namespace FaturaTakipAPI.Services
                 dbSirket.Eposta = sirket.Eposta;
                 dbSirket.VergiDairesi = sirket.VergiDairesi;
                 dbSirket.VergiKimlikNo = sirket.VergiKimlikNo;
-                dbSirket.Sifre = sifre;
                 dbSirket.Durum = sirket.Durum;
                 _dbContext.SaveChanges();
                 return ("Sirket güncellendi");
@@ -174,7 +173,7 @@ namespace FaturaTakipAPI.Services
                 }
                 var showSirket = new SirketlerGetModel
                 {
-                    SirketAdı = sirket.SirketAdi,
+                    SirketAdi = sirket.SirketAdi,
                     Adres = sirket.Adres,
                     TelefonNo = sirket.TelefonNo,
                     WebAdresi = sirket.WebAdresi,

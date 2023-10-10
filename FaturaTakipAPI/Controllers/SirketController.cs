@@ -1,6 +1,7 @@
 ﻿using FaturaTakip.Models;
 using FaturaTakipAPI.Models.Request;
 using FaturaTakipAPI.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Drawing;
 
@@ -50,9 +51,9 @@ namespace FaturaTakipAPI.Controllers
         {
             return Ok(_sirketService.CreateSirket(sirket));
         }
-
-        [HttpPut("update/{id}")]
-        public IActionResult UpdateSirket(int id, [FromBody] SirketlerCreateAndUpdateModel sirket)
+		[HttpPut("update/{id}")]
+		[Authorize]
+		public IActionResult UpdateSirket(int id, [FromBody] SirketlerCreateAndUpdateModel sirket)
         {
             return Ok(_sirketService.UpdateSirket(id, sirket));
         }

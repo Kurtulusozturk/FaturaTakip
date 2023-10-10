@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+﻿@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@{
+	string activeUserEmail = HttpContextAccessor.HttpContext.Request.Cookies["ActiveUserEmail"];
+}
+<!DOCTYPE html>
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
@@ -50,7 +54,7 @@
 						<a class="nav-link" href="/account/editprofile">Şirket Bilgilerim</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="#">Çıkış Yap (Şirket Adı)</a>
+						<a class="nav-link" href="/account/logout">Çıkış Yap (@activeUserEmail)</a>
 					</li>
 				</ul>
 			</div>

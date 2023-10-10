@@ -149,5 +149,23 @@ namespace FaturaTakip.Controllers
 				return View();
 			}
 		}
+		public IActionResult Delete(int invoiceID)
+		{
+			string activeUserToken = _httpContextAccessor.HttpContext.Request.Cookies["ActiveUserToken"];
+			string activeUserIdStr = _httpContextAccessor.HttpContext.Request.Cookies["ActiveUserId"];
+			if (activeUserToken == null)
+			{
+				return RedirectToAction("Login", "Account");
+			}
+			else
+			{
+				var client = new HttpClient();
+				client.DefaultRequestHeaders.Add("Authorization", "Bearer " + activeUserToken);
+				client.BaseAddress = new Uri("http://localhost:5191");
+				var dbUserInvoices = client.DeleteAsync("/api/fatura/delete/" + invoiceID).Result;
+				return RedirectToAction("Index", "Invoices");
+			}
+			
+		}
 	}
 }

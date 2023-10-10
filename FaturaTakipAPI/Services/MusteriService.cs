@@ -39,7 +39,7 @@ namespace FaturaTakipAPI.Services
 					TelefonNo = musteri.TelefonNo,
 					Fatura = null,
 					Sirket = sirket,
-					Durum = musteri.Durum,
+					Durum = true,
 				};
 
 				_dbContext.Musteriler?.Add(newMusteri);
@@ -75,6 +75,7 @@ namespace FaturaTakipAPI.Services
 
 				var showMusteri = new MusterilerGetModel
 				{
+					MusteriID=musteri.MusteriID,
 					Ad = musteri.Ad,
 					Soyad = musteri.Soyad,
 					Adres = musteri.Adres,
