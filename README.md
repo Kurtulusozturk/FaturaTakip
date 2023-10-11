@@ -1,6 +1,6 @@
 # FaturaTakip
 
-https://drive.google.com/file/d/1NhJhR8GYlRyL5uG7NtExpXV5f56mZ1V0/view?usp=drive_link
+Project Video: https://drive.google.com/file/d/1NhJhR8GYlRyL5uG7NtExpXV5f56mZ1V0/view?usp=drive_link
 
 # JWT(JSON Web Token):
 
