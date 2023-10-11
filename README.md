@@ -25,8 +25,8 @@ EN:BCrypt library is a library used to Hash the user's password. Using such algo
 <img width="692" alt="m8opZ" src="https://github.com/Kurtulusozturk/FaturaTakip/assets/92689191/9ec01dee-511d-4c32-b088-41e961244eb1">
 
 # Fatura Takip API's:
-TR:
+TR:Bu kısımda ise resimde de gördüğünüz gibi benim isteklerime göre bana cevaplar döndürecek API ler yazdım. Entity framework kullanarak, MSSQL bağlantılarımı oluşturup Data Base oluşturduktan sonra API işlemlerimi gerçekleştirdim.
 
-EN:
+EN:In this section, as you can see in the picture, I wrote APIs that will return me answers according to my requests. Using the Entity framework, I created my MSSQL connections and created the Data Base and then performed my API operations.
 
 ![NET Api](https://github.com/Kurtulusozturk/FaturaTakip/assets/92689191/6549d7b6-3557-467f-a6ae-1fc10e8980c0)
